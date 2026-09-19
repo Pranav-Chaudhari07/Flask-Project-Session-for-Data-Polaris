@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 25: Deploying Flask to Render
-Project Story: Launching our "Task Manager" Live on the Web (Step 22)
+Project Story: Launching our "Task Manager" Live on the Web (Step 15)
 =============================================================================
 Previously in Module 24:
 We pushed our project files to GitHub.

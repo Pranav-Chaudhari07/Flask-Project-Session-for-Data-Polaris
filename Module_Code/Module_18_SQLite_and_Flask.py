@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 18: SQLite and Flask Integration
-Project Story: Building our "Task Manager" Database (Step 15)
+Project Story: Building our "Task Manager" Database (Step 8)
 =============================================================================
 Previously in Module 17:
 We learned raw SQL commands (INSERT, SELECT, UPDATE, DELETE).

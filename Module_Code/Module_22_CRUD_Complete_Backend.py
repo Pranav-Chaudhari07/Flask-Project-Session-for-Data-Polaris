@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 22: Complete CRUD Backend Integration
-Project Story: The Complete Task Manager Backend (Step 19)
+Project Story: The Complete Task Manager Backend (Step 12 — Capstone Integration)
 =============================================================================
 CONGRATULATIONS! You have reached the Capstone Module of Day 5.
 

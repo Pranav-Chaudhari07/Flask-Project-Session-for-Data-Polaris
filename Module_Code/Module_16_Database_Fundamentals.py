@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 16: Database Fundamentals
-Project Story: Building our "Task Manager" Database (Step 13)
+Project Story: Building our "Task Manager" Database (Step 6)
 =============================================================================
 Welcome to Day 4!
 Previously in Module 15:

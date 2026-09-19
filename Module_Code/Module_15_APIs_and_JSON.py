@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 15: Building RESTful APIs with JSON
-Project Story: Building our "Task Manager" API (Step 12)
+Project Story: Building our "Task Manager" API (Step 5)
 =============================================================================
 Previously in Module 14:
 We rendered HTML web pages with forms.

@@ -1,43 +1,46 @@
 """
 =============================================================================
 MODULE 10: Introduction to Flask
-Project Story: Building our "Task Manager" Web App (Step 7)
+Topic: Your Very First Flask App (Foundation Phase Finale)
 =============================================================================
 Welcome to Day 2!
-Having learned Python foundations (Day 1) and Web HTTP theory (Modules 7-9),
-we now write our VERY FIRST FLASK WEB APPLICATION!
+In this module, we introduce the Flask web framework conceptually:
+what it is, how it handles incoming web requests, and how to write
+a "Hello World" application.
 
 What you will learn in this module:
-1. What Flask is (a micro web framework in Python)
-2. Creating the Flask app instance: app = Flask(__name__)
-3. Defining your first web routes using the @app.route() decorator
+1. What Flask is (a lightweight Python web micro-framework)
+2. Creating the WSGI app: app = Flask(__name__)
+3. Defining simple routes: @app.route('/') and @app.route('/about')
 4. Returning HTML text to a browser
 5. Understanding Debug Mode (debug=True)
 
-Next Module Connection:
-In Module 11, we will add dynamic routes (like /tasks/<int:task_id>)
-so users can view specific tasks!
+=============================================================================
+PROJECT ANNOUNCEMENT:
+In the next module (Module 11), we officially begin our hands-on project:
+THE TASK MANAGER APPLICATION (TaskFlow)!
+Everything from Module 11 through Module 26 will build, structure, persist,
+and deploy this complete project step-by-step.
 =============================================================================
 """
 
 from flask import Flask
 
-# 1. Create the Flask application instance
-# __name__ tells Flask where to look for resources
+# 1. Initialize the Flask application instance
 app = Flask(__name__)
 
 
 # =============================================================================
-# 2. DEFINING OUR FIRST WEB ROUTES
+# 2. DEFINING INTRODUCTORY WEB ROUTES
 # =============================================================================
 
 @app.route("/")
 def home():
     """
-    When a user visits http://127.0.0.1:5000/
-    Flask runs this function and displays the HTML in the browser.
+    When a user opens http://127.0.0.1:5000/ in their browser,
+    Flask runs this function and returns the HTML text.
     """
-    return "<h1>Welcome to Task Manager!</h1><p>Our Flask backend is live!</p>"
+    return "<h1>Hello, World!</h1><p>Welcome to Flask Web Development.</p>"
 
 
 @app.route("/about")
@@ -45,24 +48,24 @@ def about():
     """
     When a user visits http://127.0.0.1:5000/about
     """
-    return "<h2>About TaskFlow</h2><p>A simple, beginner-friendly task tracker built with Flask.</p>"
+    return "<h2>About This Course</h2><p>Learning Python Backend and Flask from the ground up.</p>"
 
 
 # =============================================================================
-# 3. RUNNING OUR FLASK APP
+# RUNNING OUR FLASK APP
 # =============================================================================
 if __name__ == "__main__":
-    print("--- Starting our First Flask App ---")
-    print("1. Visit http://127.0.0.1:5000/ for Homepage")
-    print("2. Visit http://127.0.0.1:5000/about for About page")
-    print("\nPress Ctrl+C in terminal to stop the server.")
+    print("--- Testing Introductory Flask Routes ---")
 
-    # debug=True automatically reloads the server when you make changes to code!
-    # To run the live web server, uncomment the line below:
-    # app.run(debug=True, port=5000)
-
-    # Automated test of routes for quick verification:
+    # Automated test of routes
     client = app.test_client()
-    print("\nAutomated test of GET / :", client.get("/").data.decode("utf-8").strip())
-    print("Automated test of GET /about :", client.get("/about").data.decode("utf-8").strip())
-    print("\n[NEXT STEP] In Module 11, we will add dynamic routes to view specific tasks!")
+    print("GET /      :", client.get("/").data.decode("utf-8").strip())
+    print("GET /about :", client.get("/about").data.decode("utf-8").strip())
+
+    print("\n" + "=" * 65)
+    print("FOUNDATION PHASE COMPLETE!")
+    print("Hands-on Project Implementation starts next in MODULE 11: Task Manager!")
+    print("=" * 65)
+
+    # To run as a live web server on your browser, uncomment below:
+    # app.run(debug=True, port=5000)

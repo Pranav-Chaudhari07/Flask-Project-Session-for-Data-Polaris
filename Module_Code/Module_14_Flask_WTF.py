@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 14: Form Validation with Flask-WTF
-Project Story: Building our "Task Manager" Web App (Step 11)
+Project Story: Building our "Task Manager" Web App (Step 4)
 =============================================================================
 Previously in Module 13:
 We built an HTML form, but checking for valid inputs manually is tedious.

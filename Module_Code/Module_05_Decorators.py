@@ -1,84 +1,76 @@
 """
 =============================================================================
 MODULE 05: Python Decorators
-Project Story: Building our "Task Manager" from Scratch (Step 5)
+Topic: Understanding the '@' Syntax Before Starting Flask (Foundation Phase)
 =============================================================================
-Previously in Module 04:
-We learned how JSON connects Python backends to web clients.
+Welcome to Module 05!
+In Flask, almost every route begins with a decorator:
+    @app.route("/")
+    def home(): ...
 
-Now in Module 05:
-In Flask, almost every URL endpoint is defined with a line starting with '@':
-    @app.route("/tasks")
-    def get_tasks(): ...
-
-To understand Flask without fear, we must understand what a Decorator is.
-A decorator is simply a function that adds extra behavior before or after
-another function runs (like logging or timing).
+Many beginners find the '@' symbol confusing.
+In Python, a DECORATOR is simply a function that takes another function as input,
+adds some behavior before or after it, and returns it.
 
 What you will learn in this module:
-1. Writing a simple decorator (@log_task_action)
-2. How decorators wrap functions
-3. How Flask uses this exact concept to register web routes!
-
-Next Module Connection:
-In Module 06, we will learn Exception Handling so our backend handles errors
-gracefully without crashing!
+1. Functions are first-class citizens (functions can be passed as arguments)
+2. Writing a simple decorator: @log_action
+3. The '@' decorator syntax explained
+4. How Flask uses this exact pattern for @app.route
 =============================================================================
 """
 
 # =============================================================================
 # 1. WRITING A SIMPLE DECORATOR
 # =============================================================================
-def log_task_action(func):
+def log_action(func):
     """
-    A decorator that prints a message before and after our task function runs.
+    A decorator that prints a message before and after the wrapped function runs.
     """
     def wrapper(*args, **kwargs):
-        print(f" [LOG] Starting task operation: '{func.__name__}'...")
+        print(f"--> [LOG] Starting function: '{func.__name__}'")
         result = func(*args, **kwargs)
-        print(f" [LOG] Finished '{func.__name__}' successfully!")
+        print(f"--> [LOG] Finished function: '{func.__name__}' successfully!")
         return result
     return wrapper
 
 
 # =============================================================================
-# 2. APPLYING THE DECORATOR WITH THE '@' SYNTAX
+# 2. APPLYING THE DECORATOR USING '@'
 # =============================================================================
-@log_task_action
-def create_new_task(title):
-    print(f"  --> Writing task '{title}' into database...")
-    return {"id": 1, "title": title, "status": "Pending"}
+@log_action
+def greet(name):
+    print(f"    Hello, {name}! Welcome to Python Backend.")
+    return f"Greeted {name}"
 
 
 # =============================================================================
-# 3. HOW FLASK USES THIS EXACT PATTERN (Mini Router Demo)
+# 3. HOW FLASK USES THIS EXACT PATTERN (Mini Router Concept)
 # =============================================================================
-# A dictionary that maps URL paths to functions
-routes = {}
+routes_table = {}
 
-def my_route(path):
-    """Mini version of Flask's @app.route decorator!"""
+def my_route(url_path):
+    """How Flask's @app.route works under the hood!"""
     def decorator(func):
-        routes[path] = func  # Save the function for this URL
+        routes_table[url_path] = func
         return func
     return decorator
 
-# Let's register a route using our custom decorator:
-@my_route("/tasks")
-def show_tasks_page():
-    return "Here are your tasks!"
+@my_route("/home")
+def home_page():
+    return "Welcome to the Homepage!"
 
 
 # =============================================================================
-# RUNNING AND TESTING OUR CODE
+# DEMONSTRATION
 # =============================================================================
 if __name__ == "__main__":
-    print("--- STEP 1: Calling Our Decorated Function ---")
-    task = create_new_task("Learn Flask Decorators")
-    print("Result:", task)
+    print("--- 1. Testing Our Custom Decorator ---")
+    greet("David")
 
-    print("\n--- STEP 2: Demystifying Flask's @app.route ---")
-    print("Routes registered in our dictionary:", routes)
-    print("When a user visits '/tasks', the server runs:", routes["/tasks"]())
+    print("\n--- 2. How Flask Uses Decorators ---")
+    print("Registered routes table:", routes_table)
+    print("Executing function for '/home':", routes_table["/home"]())
 
-    print("\n[NEXT STEP] In Module 06, we will learn Exception Handling to catch errors!")
+    print("\n[NOTE] In Modules 01-10, we learn foundational concepts.")
+    print("Our hands-on Project Implementation officially starts in Module 11!")

@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 19: Project Architecture (Flask Blueprints)
-Project Story: Building our "Task Manager" Architecture (Step 16)
+Project Story: Building our "Task Manager" Architecture (Step 9)
 =============================================================================
 Welcome to Day 5!
 Previously in Module 18:

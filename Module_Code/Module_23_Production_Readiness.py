@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 23: Production Readiness
-Project Story: Preparing our "Task Manager" for the Cloud (Step 20)
+Project Story: Preparing our "Task Manager" for the Cloud (Step 13)
 =============================================================================
 Welcome to Day 6!
 Previously in Module 22:

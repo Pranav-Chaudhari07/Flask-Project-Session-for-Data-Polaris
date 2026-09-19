@@ -1,71 +1,65 @@
 """
 =============================================================================
 MODULE 03: Object-Oriented Programming (OOP) for Backend
-Project Story: Building our "Task Manager" from Scratch (Step 3)
+Topic: Classes, Objects, Attributes, and Methods (Foundation Phase)
 =============================================================================
-Previously in Module 02:
-We used basic dictionaries to represent tasks.
-
-Now in Module 03:
-In real backend development, data records are modeled as Python CLASSES.
-A class allows us to bundle data (attributes) and actions (methods) together.
+Welcome to Module 03!
+In backend development, data records (like users, products, or orders)
+are modeled as Python Classes.
 
 What you will learn in this module:
-1. Defining a Class (class Task:)
-2. The __init__() constructor to set initial values (id, title, status)
-3. Adding methods to update state (mark_completed())
-4. Converting an object to a dictionary (to_dict()) for web responses
-
-Next Module Connection:
-In Module 04, we will learn how to convert our Task objects into JSON
-so that web browsers and mobile apps can communicate with our backend!
+1. What a Class is (a blueprint for creating objects)
+2. The __init__() constructor (initializes object attributes)
+3. Instance attributes (data stored on an object: self.username, self.email)
+4. Methods (functions that belong to an object)
+5. Converting an object to a dictionary (to_dict()) for web responses
 =============================================================================
 """
 
-class Task:
+class User:
     """
-    Represents a single Task in our Task Manager.
+    A simple class representing a User in a backend system.
     """
-    def __init__(self, task_id, title, status="Pending"):
-        # Instance attributes (data stored on the object)
-        self.id = task_id
-        self.title = title
-        self.status = status
+    def __init__(self, user_id, username, email):
+        # Instance attributes
+        self.id = user_id
+        self.username = username
+        self.email = email
+        self.is_active = True
 
-    def mark_completed(self):
-        """Action/Method: changes the task status to 'Completed'."""
-        self.status = "Completed"
-        print(f"Task #{self.id} ('{self.title}') marked as Completed!")
+    # Instance method
+    def deactivate(self):
+        """Changes user status to inactive."""
+        self.is_active = False
+        print(f"User '{self.username}' has been deactivated.")
 
+    # Method to format data as dictionary (useful for web APIs!)
     def to_dict(self):
-        """
-        Converts the object into a simple Python dictionary.
-        This is crucial for web APIs when sending data over the internet.
-        """
         return {
             "id": self.id,
-            "title": self.title,
-            "status": self.status
+            "username": self.username,
+            "email": self.email,
+            "is_active": self.is_active
         }
 
 
 # =============================================================================
-# RUNNING AND TESTING OUR CODE
+# DEMONSTRATION
 # =============================================================================
 if __name__ == "__main__":
-    print("--- STEP 1: Creating Task Objects ---")
-    task1 = Task(1, "Learn Object-Oriented Programming")
-    task2 = Task(2, "Prepare for Flask Introduction")
+    print("--- 1. Creating Objects from a Class (Instantiation) ---")
+    user1 = User(1, "alice", "alice@example.com")
+    user2 = User(2, "bob", "bob@example.com")
 
-    print(f"Task 1 created: ID={task1.id}, Title='{task1.title}', Status='{task1.status}'")
-    print(f"Task 2 created: ID={task2.id}, Title='{task2.title}', Status='{task2.status}'")
+    print(f"User 1: ID={user1.id}, Name={user1.username}, Active={user1.is_active}")
+    print(f"User 2: ID={user2.id}, Name={user2.username}, Active={user2.is_active}")
 
-    print("\n--- STEP 2: Calling Methods to Update State ---")
-    task1.mark_completed()
-    print("Task 1 status after method call:", task1.status)
+    print("\n--- 2. Calling Methods to Modify State ---")
+    user2.deactivate()
+    print("User 2 active status now:", user2.is_active)
 
-    print("\n--- STEP 3: Converting Objects to Dictionaries ---")
-    print("Task 1 dict:", task1.to_dict())
-    print("Task 2 dict:", task2.to_dict())
+    print("\n--- 3. Converting Object to Dictionary ---")
+    print("User 1 Dictionary:", user1.to_dict())
 
-    print("\n[NEXT STEP] In Module 04, we will convert these task dictionaries into JSON!")
+    print("\n[NOTE] In Modules 01-10, we learn foundational concepts.")
+    print("Our hands-on Project Implementation officially starts in Module 11!")

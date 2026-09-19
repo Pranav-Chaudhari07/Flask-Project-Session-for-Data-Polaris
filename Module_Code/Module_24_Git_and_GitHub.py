@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 24: Git and GitHub for Backend Developers
-Project Story: Version Control for our "Task Manager" (Step 21)
+Project Story: Version Control for our "Task Manager" (Step 14)
 =============================================================================
 Previously in Module 23:
 We secured our app with environment variables.

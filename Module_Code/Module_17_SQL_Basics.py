@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 17: SQL Basics (CRUD Operations)
-Project Story: Building our "Task Manager" Database (Step 14)
+Project Story: Building our "Task Manager" Database (Step 7)
 =============================================================================
 Previously in Module 16:
 We created our tasks table in SQLite.

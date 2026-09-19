@@ -1,9 +1,9 @@
 """
 =============================================================================
 MODULE 12: Query Parameters and Request Data
-Project Story: Building our "Task Manager" Web App (Step 9)
+Project Story: Building our "Task Manager" Web App (Step 2)
 =============================================================================
-Previously in Module 11:
+Previously in Module 11 (Step 1):
 We built dynamic routes like /tasks/<int:task_id>.
 
 Now in Module 12:

@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 13: HTML Forms and Jinja2 Templates
-Project Story: Building our "Task Manager" Web App (Step 10)
+Project Story: Building our "Task Manager" Web App (Step 3)
 =============================================================================
 Previously in Module 12:
 We accepted form inputs, but writing HTML inside Python strings was messy.

@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 21: Validation and Error Handling
-Project Story: Building our "Task Manager" API (Step 18)
+Project Story: Building our "Task Manager" API (Step 11)
 =============================================================================
 Previously in Module 20:
 We designed clean REST API endpoints.

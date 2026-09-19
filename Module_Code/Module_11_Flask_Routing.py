@@ -1,66 +1,67 @@
 """
 =============================================================================
 MODULE 11: Flask Routing
-Project Story: Building our "Task Manager" Web App (Step 8)
+PROJECT IMPLEMENTATION STARTS HERE!
+Project: Task Manager Application (TaskFlow) — Step 1: Core Routing
 =============================================================================
-Previously in Module 10:
-We created static routes like '/' and '/about'.
+WELCOME TO THE PROJECT IMPLEMENTATION PHASE!
+From this module forward (Module 11 to Module 26), we will build our real-world
+hands-on backend application: The Task Manager System.
 
-Now in Module 11:
-In our Task Manager, we need to show individual tasks:
-- Task 1: /tasks/1
-- Task 2: /tasks/2
-Instead of writing 100 separate routes, Flask provides DYNAMIC ROUTES!
+In Step 1 of our project, we implement core routing:
+1. Static Route: GET /tasks (Show all tasks in our system)
+2. Dynamic Route: GET /tasks/<int:task_id> (Show details of a specific task)
+3. Type Safety: Flask's <int:task_id> converter rejects non-integer IDs (404)
 
-What you will learn in this module:
-1. Static routes vs Dynamic routes with variables
-2. Using the integer converter: <int:task_id>
-3. Using the string converter: <string:category>
-4. Generating URLs dynamically with url_for()
-
-Next Module Connection:
-In Module 12, we will learn Query Parameters (like /tasks?status=Pending)
-and how to read data sent from forms!
+Next Step in Project (Module 12):
+We will add Task Filtering with query parameters (e.g. /tasks/filter?status=Pending)
+and allow users to submit tasks!
 =============================================================================
 """
 
-from flask import Flask, url_for
+from flask import Flask
 
 app = Flask(__name__)
 
-# Our list of tasks
+# Initial in-memory project data: Task Manager records
 tasks = [
-    {"id": 1, "title": "Learn Flask Basics", "status": "Completed"},
-    {"id": 2, "title": "Understand Dynamic Routing", "status": "In Progress"},
-    {"id": 3, "title": "Connect HTML Templates", "status": "Pending"}
+    {"id": 1, "title": "Setup Git Repository", "status": "Completed"},
+    {"id": 2, "title": "Design Database Schema", "status": "In Progress"},
+    {"id": 3, "title": "Build REST API Endpoints", "status": "Pending"}
 ]
 
 # =============================================================================
-# 1. STATIC ROUTE: List all tasks
+# 1. STATIC ROUTE: List all tasks in Task Manager
 # =============================================================================
 @app.route("/tasks")
 def list_tasks():
-    output = "<h2>All Tasks:</h2><ul>"
+    """Returns a simple list of all tasks."""
+    html_output = "<h2>TaskFlow — All Tasks</h2><ul>"
     for t in tasks:
-        output += f"<li><a href='/tasks/{t['id']}'>{t['title']}</a> ({t['status']})</li>"
-    output += "</ul>"
-    return output
+        html_output += f"<li><a href='/tasks/{t['id']}'>Task #{t['id']}: {t['title']}</a> [{t['status']}]</li>"
+    html_output += "</ul>"
+    return html_output
 
 
 # =============================================================================
-# 2. DYNAMIC ROUTE WITH INTEGER CONVERTER (<int:task_id>)
+# 2. DYNAMIC ROUTE: View a single task by ID
 # =============================================================================
 @app.route("/tasks/<int:task_id>")
-def get_single_task(task_id):
+def view_task_detail(task_id):
     """
-    <int:task_id> automatically converts the URL segment into an integer.
-    If a user visits /tasks/hello, Flask automatically returns 404!
+    <int:task_id> is a dynamic converter.
+    Matches /tasks/1, /tasks/2, etc.
     """
     for t in tasks:
         if t["id"] == task_id:
-            return f"<h3>Task #{t['id']} Details</h3><p>Title: {t['title']}</p><p>Status: {t['status']}</p>"
+            return f"""
+            <h3>Task Details (ID: {t['id']})</h3>
+            <p><strong>Title:</strong> {t['title']}</p>
+            <p><strong>Status:</strong> {t['status']}</p>
+            <p><a href='/tasks'>&larr; Back to all tasks</a></p>
+            """
 
-    return f"<h3>Task #{task_id} not found!</h3>", 404
+    return f"<h3>Error: Task #{task_id} not found.</h3><p><a href='/tasks'>Back</a></p>", 404
 
 
 # =============================================================================
@@ -69,16 +70,17 @@ def get_single_task(task_id):
 if __name__ == "__main__":
     client = app.test_client()
 
-    print("--- STEP 1: Testing /tasks (Static List) ---")
+    print("--- 1. Testing GET /tasks (Project All Tasks List) ---")
     r1 = client.get("/tasks")
     print("Status:", r1.status_code)
 
-    print("\n--- STEP 2: Testing /tasks/1 (Dynamic Integer Route) ---")
+    print("\n--- 2. Testing GET /tasks/1 (Single Task View) ---")
     r2 = client.get("/tasks/1")
-    print(r2.data.decode("utf-8"))
+    print(r2.data.decode("utf-8").strip())
 
-    print("\n--- STEP 3: Testing /tasks/99 (Not Found) ---")
-    r3 = client.get("/tasks/99")
-    print("Status:", r3.status_code, "->", r3.data.decode("utf-8"))
+    print("\n--- 3. Testing GET /tasks/999 (Not Found) ---")
+    r3 = client.get("/tasks/999")
+    print("Status:", r3.status_code)
 
-    print("\n[NEXT STEP] In Module 12, we will filter tasks using query parameters (e.g. ?status=Pending)!")
+    print("\n[PROJECT STEP 1 COMPLETE]")
+    print("Next in Module 12: Adding task search and query filtering!")

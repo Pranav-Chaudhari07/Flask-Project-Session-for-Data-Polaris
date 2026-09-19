@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 26: Serverless Deployment with Vercel
-Project Story: Exploring Serverless Architecture (Step 23 — Final Module!)
+Project Story: Exploring Serverless Architecture (Step 16 — Final Capstone)
 =============================================================================
 Previously in Module 25:
 We deployed to Render where our server stays running 24/7.

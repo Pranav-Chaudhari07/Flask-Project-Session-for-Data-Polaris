@@ -1,82 +1,76 @@
 """
 =============================================================================
 MODULE 06: Exception Handling
-Project Story: Building our "Task Manager" from Scratch (Step 6)
+Topic: Defensive Programming and Preventing Crashes (Foundation Phase)
 =============================================================================
-Previously in Module 05:
-We learned about decorators and how Flask maps URLs to functions.
-
-Now in Module 06:
-What happens if a user searches for a task ID that doesn't exist?
-Without error handling, Python crashes and the web server throws an ugly error!
-In this module, we learn defensive programming to catch and handle errors.
+Welcome to Module 06!
+In backend development, unexpected inputs (like invalid user data or missing records)
+can cause errors. If unhandled, these errors crash your server!
 
 What you will learn in this module:
-1. The try...except...finally block
-2. Creating a custom exception (TaskNotFoundError)
-3. Preventing crashes and returning friendly error messages
-
-Next Module Connection:
-Modules 07, 08, and 09 cover the theory of Web, HTTP Verbs, and Status Codes
-(covered in the Preparation Guide text files).
-In Module 10, we will launch our FIRST REAL FLASK APPLICATION!
+1. What exceptions are and why they occur
+2. Catching errors with try...except...finally
+3. Raising exceptions intentionally with 'raise'
+4. Defining a custom exception (e.g. InvalidAgeError)
 =============================================================================
 """
 
-# Sample tasks list in our Task Manager
-tasks = [
-    {"id": 1, "title": "Learn Python Foundation", "status": "Completed"},
-    {"id": 2, "title": "Start Flask Web App", "status": "Pending"}
-]
-
 # =============================================================================
-# 1. CUSTOM EXCEPTION
+# 1. CUSTOM EXCEPTION CLASS
 # =============================================================================
-class TaskNotFoundError(Exception):
-    """Custom exception raised when a requested task does not exist."""
+class InvalidAgeError(Exception):
+    """Raised when an age input is invalid."""
     pass
 
 
 # =============================================================================
-# 2. FUNCTION THAT RAISES AN EXCEPTION DEFENSIVELY
+# 2. FUNCTION THAT VALIDATES INPUT AND RAISES EXCEPTIONS
 # =============================================================================
-def find_task_by_id(task_id):
-    """Finds a task or raises TaskNotFoundError if missing."""
-    for task in tasks:
-        if task["id"] == task_id:
-            return task
-            
-    # If not found, raise our custom error
-    raise TaskNotFoundError(f"Task with ID {task_id} not found.")
+def register_student(name, age):
+    """
+    Registers a student.
+    Raises ValueError or InvalidAgeError if rules fail.
+    """
+    if not name or not isinstance(name, str):
+        raise ValueError("Student name must be a non-empty string.")
+
+    if age < 0 or age > 120:
+        raise InvalidAgeError(f"Age {age} is not valid. Must be between 0 and 120.")
+
+    return {"name": name, "age": age, "status": "Registered"}
 
 
 # =============================================================================
-# 3. HANDLING THE ERROR WITH TRY...EXCEPT
+# 3. DEFENSIVE CODING WITH TRY...EXCEPT...FINALLY
 # =============================================================================
-def safe_get_task(task_id):
-    """
-    Safely retrieves a task without crashing the server.
-    """
+def safe_registration(name, age):
     try:
-        task = find_task_by_id(task_id)
-        print(f" [SUCCESS] Found Task: {task['title']}")
-        return task
-    except TaskNotFoundError as error:
-        print(f" [HANDLED ERROR] {error}")
-        return {"error": str(error)}
+        student = register_student(name, age)
+        print(f" [SUCCESS] Registered: {student['name']} (Age: {student['age']})")
+        return student
+    except ValueError as err:
+        print(f" [ERROR - Invalid Input] {err}")
+    except InvalidAgeError as err:
+        print(f" [ERROR - Business Rule Failed] {err}")
+    except Exception as unexpected:
+        print(f" [UNEXPECTED ERROR] {unexpected}")
     finally:
-        print(" [CLEANUP] Search attempt finished.")
+        print(" [CLEANUP] Registration attempt completed.")
 
 
 # =============================================================================
-# RUNNING AND TESTING OUR CODE
+# DEMONSTRATION
 # =============================================================================
 if __name__ == "__main__":
-    print("--- STEP 1: Fetching a Task that Exists (Happy Path) ---")
-    safe_get_task(1)
+    print("--- 1. Valid Input (Happy Path) ---")
+    safe_registration("Emma Watson", 21)
 
-    print("\n--- STEP 2: Fetching a Task that Does NOT Exist (Error Path) ---")
-    safe_get_task(99)
+    print("\n--- 2. Invalid Input (ValueError) ---")
+    safe_registration("", 25)
 
-    print("\n[NEXT STEP] Review Modules 07-09 theory in Preparation_guide/.")
-    print("Then in Module 10, we begin FLASK WEB DEVELOPMENT!")
+    print("\n--- 3. Invalid Rule (Custom InvalidAgeError) ---")
+    safe_registration("Benjamin Button", 150)
+
+    print("\n[NOTE] Modules 07, 08, and 09 cover Web & HTTP theory in Preparation_guide/.")
+    print("In Module 10, we introduce Flask.")
+    print("Our hands-on Project Implementation officially starts in Module 11!")

@@ -1,77 +1,67 @@
 """
 =============================================================================
 MODULE 04: Dictionaries and JSON Thinking
-Project Story: Building our "Task Manager" from Scratch (Step 4)
+Topic: The Language of Web Data Exchange (Foundation Phase)
 =============================================================================
-Previously in Module 03:
-We represented tasks as Python classes and converted them to dictionaries.
-
-Now in Module 04:
-Web browsers, React frontends, and mobile apps do NOT understand Python objects.
-They exchange data using JSON (JavaScript Object Notation), which is plain text.
+Welcome to Module 04!
+In web applications, Python backends process data as Dictionaries,
+but browsers, mobile apps, and frontends communicate in JSON (plain text).
 
 What you will learn in this module:
-1. json.dumps() -> Converts a Python dictionary into a JSON text string (Sending data)
-2. json.loads() -> Converts a JSON text string into a Python dictionary (Receiving data)
-3. The complete Request-Response JSON cycle of an API
-
-Next Module Connection:
-In Module 05, we will learn about Python Decorators, which Flask uses
-extensively for defining web routes (@app.route)!
+1. Python Dictionaries (key-value data records)
+2. What JSON is (JavaScript Object Notation text)
+3. json.dumps() -> Serialization: Python Dictionary -> JSON String (Sending data)
+4. json.loads() -> Deserialization: JSON String -> Python Dictionary (Receiving data)
 =============================================================================
 """
 
 import json
 
-# Sample tasks in Python dictionary format (like we made in Module 03)
-my_tasks = [
-    {"id": 1, "title": "Learn JSON basics", "status": "Completed"},
-    {"id": 2, "title": "Connect Frontend to Flask", "status": "Pending"}
-]
+# 1. Python Dictionary (lives in Python memory)
+user_data = {
+    "id": 101,
+    "name": "Sarah Connor",
+    "skills": ["Python", "Flask", "SQL"],
+    "is_admin": False
+}
 
 # =============================================================================
-# 1. SERIALIZATION: Python Data -> JSON String (Sending to Frontend)
+# 2. SERIALIZATION: Python Dict -> JSON String (json.dumps)
 # =============================================================================
-def send_tasks_as_json():
-    """
-    json.dumps() takes Python data (list/dict) and turns it into a JSON string.
-    In Flask, the function jsonify() does this automatically!
-    """
-    json_string = json.dumps(my_tasks, indent=2)
+def convert_to_json(data):
+    """Converts Python dictionary to a plain text JSON string."""
+    json_string = json.dumps(data, indent=2)
     return json_string
 
 
 # =============================================================================
-# 2. DESERIALIZATION: JSON String -> Python Data (Receiving from Frontend)
+# 3. DESERIALIZATION: JSON String -> Python Dict (json.loads)
 # =============================================================================
-def receive_new_task_from_client(incoming_json_string):
-    """
-    json.loads() takes raw JSON text sent by a client and turns it into
-    a Python dictionary so our backend can process it.
-    """
-    task_dict = json.loads(incoming_json_string)
-    task_dict["id"] = len(my_tasks) + 1
-    my_tasks.append(task_dict)
-    return task_dict
+def parse_from_json(json_text):
+    """Converts a raw JSON text string into a Python dictionary."""
+    data_dict = json.loads(json_text)
+    return data_dict
 
 
 # =============================================================================
-# RUNNING AND TESTING OUR CODE
+# DEMONSTRATION
 # =============================================================================
 if __name__ == "__main__":
-    print("--- STEP 1: Converting Python Tasks to JSON String (dumps) ---")
-    json_output = send_tasks_as_json()
-    print("Data formatted as JSON text:")
-    print(json_output)
+    print("--- 1. Python Dictionary ---")
+    print("Data type:", type(user_data))
+    print("Value:", user_data)
 
-    print("\n--- STEP 2: Receiving a New Task from Client JSON (loads) ---")
-    # Simulating what a browser or Postman sends to our server:
-    incoming_data = '{"title": "Learn Flask Routes", "status": "Pending"}'
-    print("Raw text received from client:", incoming_data)
+    print("\n--- 2. Serializing to JSON String (json.dumps) ---")
+    json_result = convert_to_json(user_data)
+    print("Data type:", type(json_result))
+    print("JSON Text sent to web clients:\n" + json_result)
 
-    new_task = receive_new_task_from_client(incoming_data)
-    print("Parsed into Python dictionary and added:", new_task)
+    print("\n--- 3. Deserializing from JSON String (json.loads) ---")
+    incoming_client_json = '{"product": "Laptop", "price": 899.99, "in_stock": true}'
+    parsed_dict = parse_from_json(incoming_client_json)
+    print("Data type:", type(parsed_dict))
+    print("Product Name:", parsed_dict["product"])
+    print("Product Price: $", parsed_dict["price"])
 
-    print(f"\nTotal tasks in our list now: {len(my_tasks)}")
-
-    print("\n[NEXT STEP] In Module 05, we will learn Decorators before starting Flask!")
+    print("\n[NOTE] In Modules 01-10, we learn foundational concepts.")
+    print("Our hands-on Project Implementation officially starts in Module 11!")

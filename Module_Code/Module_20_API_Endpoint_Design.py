@@ -1,7 +1,7 @@
 """
 =============================================================================
 MODULE 20: REST API Endpoint Design
-Project Story: Building our "Task Manager" API (Step 17)
+Project Story: Building our "Task Manager" API (Step 10)
 =============================================================================
 Previously in Module 19:
 We organized routes using Blueprints.
