@@ -1,14 +1,14 @@
 <!-- ============================================================ -->
-<!-- edit_task.html — Form to Edit an Existing Task               -->
+<!-- edit_task.html — Form to Edit an Existing Task (Module 14)   -->
 <!-- ============================================================ -->
 <!-- Similar to add_task.html, but the form is PRE-FILLED          -->
 <!-- with the task's current data.                                 -->
 <!--                                                               -->
-<!-- In app.py, on GET request:                                    -->
-<!--   form.title.data = task["title"]    ← fills the title field  -->
-<!--   form.status.data = task["status"]  ← selects the status     -->
-<!--                                                               -->
-<!-- On POST (submit): saves the updated data to the database.    -->
+<!-- Module 14 — Flask-WTF:                                        -->
+<!--   In task_routes.py, on GET request:                          -->
+<!--     form.title.data = task["title"]    ← fills the field      -->
+<!--     form.status.data = task["status"]  ← selects the status   -->
+<!--   On POST (submit): saves the updated data to the database.  -->
 <!-- ============================================================ -->
 
 {% extends "base.html" %}
@@ -16,17 +16,18 @@
 {% block content %}
 
 <h1>Edit Task #{{ task.id }}</h1>
-<!-- Shows which task we're editing -->
+<!-- Module 13 — Jinja2: {{ task.id }} shows which task we're editing -->
 
 <form method="POST">
     {{ form.hidden_tag() }}
-    <!-- CSRF token — always required for form security -->
+    <!-- Module 14 — CSRF token — always required for form security -->
 
     <!-- ===== Title Field ===== -->
     <div class="form-group">
         {{ form.title.label }}
         {{ form.title(size=40) }}
         <!-- This field is pre-filled with the current title -->
+        <!-- Module 14: form.title.data was set in the route handler -->
         {% for error in form.title.errors %}
             <span class="error">{{ error }}</span>
         {% endfor %}
@@ -42,11 +43,17 @@
         {% endfor %}
     </div>
 
-    <!-- ===== Status Dropdown ===== -->
+    <!-- ===== Status Dropdown (Module 14 — SelectField) ===== -->
     <div class="form-group">
         {{ form.status.label }}
         {{ form.status() }}
-        <!-- The current status is pre-selected in the dropdown -->
+        <!-- Module 14 — SelectField:
+             Renders a <select> dropdown with choices:
+             - Pending
+             - In Progress
+             - Completed
+             The current status is pre-selected
+        -->
         {% for error in form.status.errors %}
             <span class="error">{{ error }}</span>
         {% endfor %}
@@ -55,7 +62,9 @@
     {{ form.submit(class="btn") }}
 </form>
 
-<a href="{{ url_for('task_detail', task_id=task.id) }}">Cancel</a>
-<!-- Cancel link → goes back to the task detail page without saving changes -->
+<div class="actions" style="margin-top: 15px;">
+    <a href="{{ url_for('tasks.task_detail', task_id=task.id) }}">← Cancel</a>
+    <!-- Cancel link → goes back to the task detail page without saving changes -->
+</div>
 
 {% endblock %}

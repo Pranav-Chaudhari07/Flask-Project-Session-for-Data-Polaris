@@ -1,5 +1,5 @@
 # ============================================================
-# forms.py — Flask-WTF Form Classes
+# forms.py — Flask-WTF Form Classes (Module 14)
 # ============================================================
 # This file defines our HTML forms using Flask-WTF and WTForms.
 #
@@ -14,11 +14,15 @@
 #   2. In app.py, we create a form instance: form = AddTaskForm()
 #   3. In the template, we render it: {{ form.title() }}
 #   4. When submitted, Flask-WTF checks all rules automatically
+#
+# Module 14 — Flask-WTF: Form classes, Fields, Validators, CSRF
+# Module 3  — OOP: Classes inherit from FlaskForm
 # ============================================================
 
 from flask_wtf import FlaskForm
 # FlaskForm is the base class for all our forms
 # It adds CSRF protection automatically
+# Module 3 — OOP: We INHERIT from FlaskForm (class AddTaskForm(FlaskForm))
 
 from wtforms import StringField, TextAreaField, SelectField, SubmitField
 # StringField    → A single-line text input (<input type="text">)
@@ -26,26 +30,35 @@ from wtforms import StringField, TextAreaField, SelectField, SubmitField
 # SelectField    → A dropdown menu (<select>)
 # SubmitField    → A submit button (<input type="submit">)
 
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 # DataRequired → The field cannot be empty (must have a value)
+# Length       → The field must be within a min/max character length
 
 
 class AddTaskForm(FlaskForm):
     """
     Form to add a new task.
-    
+
+    Module 14 — Flask-WTF:
+      - Fields define the form inputs
+      - Validators define the rules
+      - FlaskForm base class adds CSRF token
+
     Fields:
       - title: Required text field for the task name
       - description: Optional text area for details
       - submit: The submit button
-    
+
     Note: Status is NOT included here — new tasks always start as "pending".
     Users can change the status later using the Edit form.
     """
     title = StringField(
         "Title",  # The label shown next to the field
-        validators=[DataRequired(message="Title is required.")]
-        # DataRequired() means: if this field is empty, show the error message
+        validators=[
+            DataRequired(message="Title is required."),
+            # DataRequired() means: if this field is empty, show the error message
+            Length(min=2, max=100, message="Title must be between 2 and 100 characters.")
+        ]
     )
 
     description = TextAreaField(
@@ -62,12 +75,17 @@ class AddTaskForm(FlaskForm):
 class EditTaskForm(FlaskForm):
     """
     Form to edit an existing task.
-    
-    Same fields as AddTaskForm — title, description, and status.
+
+    Module 14 — Flask-WTF:
+      Same fields as AddTaskForm PLUS a status dropdown.
+      The SelectField creates a <select> element with predefined choices.
     """
     title = StringField(
         "Title",
-        validators=[DataRequired(message="Title is required.")]
+        validators=[
+            DataRequired(message="Title is required."),
+            Length(min=2, max=100, message="Title must be between 2 and 100 characters.")
+        ]
     )
 
     description = TextAreaField("Description")
@@ -79,6 +97,9 @@ class EditTaskForm(FlaskForm):
             ("in_progress", "In Progress"),
             ("completed", "Completed")
         ],
+        # choices is a list of (value, display_text) tuples
+        # value → what gets saved ("pending")
+        # display_text → what the user sees ("Pending")
         validators=[DataRequired()]
     )
 

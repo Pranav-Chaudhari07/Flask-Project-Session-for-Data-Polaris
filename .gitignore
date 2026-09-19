@@ -9,6 +9,9 @@ __pycache__/
 # Database file (auto-created on run)
 tasks.db
 
+# Environment variables (secrets!)
+.env
+
 # IDE files
 .vscode/
 .idea/
