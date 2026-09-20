@@ -17,51 +17,50 @@ What you will learn in this module:
 
 import json
 
-# 1. Python Dictionary (lives in Python memory)
-user_data = {
+# -----------------------------
+# 1. Python Dictionary
+# -----------------------------
+
+student = {
     "id": 101,
-    "name": "Sarah Connor",
+    "name": "Devansh",
+    "branch": "CSE",
     "skills": ["Python", "Flask", "SQL"],
     "is_admin": False
 }
 
-# =============================================================================
-# 2. SERIALIZATION: Python Dict -> JSON String (json.dumps)
-# =============================================================================
-def convert_to_json(data):
-    """Converts Python dictionary to a plain text JSON string."""
-    json_string = json.dumps(data, indent=2)
-    return json_string
+print("===== PYTHON DICTIONARY =====")
+print(student)
+print("Type:", type(student))
 
 
-# =============================================================================
-# 3. DESERIALIZATION: JSON String -> Python Dict (json.loads)
-# =============================================================================
-def parse_from_json(json_text):
-    """Converts a raw JSON text string into a Python dictionary."""
-    data_dict = json.loads(json_text)
-    return data_dict
+# -----------------------------
+# 2. Dictionary → JSON
+# -----------------------------
+
+json_data = json.dumps(student, indent=2)
+
+print("\n===== JSON DATA =====")
+print(json_data)
+print("Type:", type(json_data))
 
 
-# =============================================================================
-# DEMONSTRATION
-# =============================================================================
-if __name__ == "__main__":
-    print("--- 1. Python Dictionary ---")
-    print("Data type:", type(user_data))
-    print("Value:", user_data)
+# -----------------------------
+# 3. JSON → Dictionary
+# -----------------------------
 
-    print("\n--- 2. Serializing to JSON String (json.dumps) ---")
-    json_result = convert_to_json(user_data)
-    print("Data type:", type(json_result))
-    print("JSON Text sent to web clients:\n" + json_result)
+python_data = json.loads(json_data)
 
-    print("\n--- 3. Deserializing from JSON String (json.loads) ---")
-    incoming_client_json = '{"product": "Laptop", "price": 899.99, "in_stock": true}'
-    parsed_dict = parse_from_json(incoming_client_json)
-    print("Data type:", type(parsed_dict))
-    print("Product Name:", parsed_dict["product"])
-    print("Product Price: $", parsed_dict["price"])
+print("\n===== BACK TO PYTHON =====")
+print(python_data)
+print("Type:", type(python_data))
 
-    print("\n[NOTE] In Modules 01-10, we learn foundational concepts.")
-    print("Our hands-on Project Implementation officially starts in Module 11!")
+
+# -----------------------------
+# 4. Access JSON-converted data
+# -----------------------------
+
+print("\n===== STUDENT INFORMATION =====")
+print("Name:", python_data["name"])
+print("Branch:", python_data["branch"])
+print("First Skill:", python_data["skills"][0])
