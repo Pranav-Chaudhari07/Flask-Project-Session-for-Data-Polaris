@@ -15,11 +15,15 @@
 #   Module 18 — SQLite + Flask Integration
 # ============================================================
 
+import os
 import sqlite3
 # sqlite3 is Python's built-in module for working with SQLite databases
 # SQLite stores everything in a single file (tasks.db) — no server needed
 
-DATABASE = "tasks.db"
+DATABASE = os.environ.get(
+    "DATABASE",
+    "/tmp/tasks.db" if os.environ.get("VERCEL") else "tasks.db"
+)
 # The name of our database file
 # This file is created automatically when you first run the app
 # All your data (users, tasks) is stored here permanently
